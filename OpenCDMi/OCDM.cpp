@@ -73,7 +73,7 @@ namespace OCDM {
             {
                 return (IsOperational() ? 1 : 0);
             }
-            const bool IsOperational() const override
+            bool IsOperational() const override
             {
                 return _main.IsActive();
             }
