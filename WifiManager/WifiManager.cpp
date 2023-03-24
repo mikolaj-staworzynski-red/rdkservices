@@ -19,7 +19,7 @@
 
 #include "WifiManager.h"
 #include "UtilsJsonRpc.h"
-#include "UtilsIarm.h"
+#include "WifiImplementation.h"
 
 #include <vector>
 #include <utility>
@@ -97,7 +97,7 @@ namespace WPEFramework
 
         const string WifiManager::Initialize(PluginHost::IShell* service)
         {
-            Utils::IARM::init();
+            WifiImplementation::init();
 
             if (instance != nullptr) {
                 LOGERR("Expecting 'instance' to be initially unset; two instances of the plugin?");
@@ -108,6 +108,9 @@ namespace WPEFramework
             // Initialize other parts of the implementation
             string const scanMessage = wifiScan.Initialize(service);
             string const eventsMessage = wifiEvents.Initialize(service);
+#ifdef IMPL_LGI
+            wifiState.Initialize();
+#endif
 
             // Combine their error messages (if any)
             return scanMessage + eventsMessage;
@@ -116,7 +119,7 @@ namespace WPEFramework
         void WifiManager::Deinitialize(PluginHost::IShell* service)
         {
             wifiScan.Deinitialize(service);
-            wifiSignalThreshold.stopSignalThresholdThread();
+            WifiImplementation::deinit();
 
             instance = nullptr;
         }
