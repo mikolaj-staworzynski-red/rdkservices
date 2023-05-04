@@ -253,7 +253,7 @@ install(
     COMPONENT ${PROJECT_NAME})
 
 if(WEBKIT_GLIB_API)
-#   add_subdirectory(Extension)
+    add_subdirectory(Extension)
 else()
     # also build injected bundle
     add_subdirectory(InjectedBundle)
