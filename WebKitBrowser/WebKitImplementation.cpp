@@ -2790,7 +2790,6 @@ static GSourceFuncs _handlerIntervention =
             // Allow mixed content.
             bool enableWebSecurity = _config.Secure.Value();
             g_object_set(G_OBJECT(preferences),
-                     "enable-websecurity", enableWebSecurity,
                      "allow-running-of-insecure-content", !enableWebSecurity,
                      "allow-display-of-insecure-content", !enableWebSecurity, nullptr);
 
