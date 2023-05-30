@@ -516,6 +516,9 @@ static GSourceFuncs _handlerIntervention =
         public:
             Config()
                 : Core::JSON::Container()
+                , WebkitDebug()
+                , GstDebug()
+                , GstNoColor()
                 , UserAgent()
                 , URL(_T("http://www.google.com"))
                 , Whitelist()
@@ -579,6 +582,9 @@ static GSourceFuncs _handlerIntervention =
                 , ContentFilter()
                 , LoggingTarget()
             {
+                Add(_T("webkitdebug"), &WebkitDebug);
+                Add(_T("gstdebug"), &GstDebug);
+                Add(_T("gstnocolor"), &GstNoColor);
                 Add(_T("useragent"), &UserAgent);
                 Add(_T("url"), &URL);
                 Add(_T("whitelist"), &Whitelist);
@@ -649,6 +655,9 @@ static GSourceFuncs _handlerIntervention =
             }
 
         public:
+            Core::JSON::String WebkitDebug;
+            Core::JSON::String GstDebug;
+            Core::JSON::Boolean GstNoColor;
             Core::JSON::String UserAgent;
             Core::JSON::String URL;
             Core::JSON::String Whitelist;
@@ -2304,6 +2313,18 @@ static GSourceFuncs _handlerIntervention =
             } else {
                 Core::SystemInfo::SetEnvironment(_T("CLIENT_IDENTIFIER"), service->Callsign(), !environmentOverride);
             }
+
+            // WEBKIT_DEBUG
+            if (_config.WebkitDebug.Value().empty() == false)
+               Core::SystemInfo::SetEnvironment(_T("WEBKIT_DEBUG"), _config.WebkitDebug.Value(), !environmentOverride);
+
+            // GST_DEBUG
+            if (_config.GstDebug.Value().empty() == false)
+               Core::SystemInfo::SetEnvironment(_T("GST_DEBUG"), _config.GstDebug.Value(), !environmentOverride);
+
+            // GST_DEBUG_NO_COLOR
+            if (_config.GstNoColor.IsSet())
+                Core::SystemInfo::SetEnvironment(_T("GST_DEBUG_NO_COLOR"), _T("1"), !environmentOverride);
 
             // Set dummy window for gst-gl
             Core::SystemInfo::SetEnvironment(_T("GST_GL_WINDOW"), _T("dummy"), !environmentOverride);
