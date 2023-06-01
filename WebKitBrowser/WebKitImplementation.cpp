@@ -2825,7 +2825,7 @@ static GSourceFuncs _handlerIntervention =
             return true;
         }
         static void cookieManagerChangedCallback(WebKitCookieManager* manager, WebKitImplementation* browser) {
-#ifdef RDK6_SUPPORT
+#ifdef ENABLE_CLOUD_COOKIE_JAR
             browser->NotifyCookieJarChanged();
 #endif
         }
