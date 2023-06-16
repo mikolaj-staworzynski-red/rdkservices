@@ -646,7 +646,7 @@ namespace Plugin {
                             ASSERT(_buffer != nullptr);
 
                             if(_buffer->IsValid() == false){
-                                SYSLOG(Trace::Fatal, ("Could not open session buffer %s", BufferId().c_str()));
+                                TRACE(Trace::Fatal, ("Could not open session buffer %s", BufferId().c_str()));
                             }
                             
 
