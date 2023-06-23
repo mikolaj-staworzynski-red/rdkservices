@@ -145,7 +145,7 @@ namespace Plugin {
             }
 
         private:
-            virtual void* Aquire(const string&, const uint32_t interfaceId, const uint32_t versionId)
+            void* Acquire(const string&, const uint32_t interfaceId, const uint32_t versionId) override
             {
                 void* result = nullptr;
 
